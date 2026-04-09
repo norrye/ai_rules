@@ -2,16 +2,20 @@
 
 ## Priority: 6
 
-## Code Standards
+These standards define how all code must be written. The Role section in `.amazonq/rules/rules.md` provides the concise version; this doc has the full detail.
 
-- **Clarity**: PEP 8 compliance. Use Black, isort, Ruff for formatting.
-- **Efficiency**: Profile with cProfile or line_profiler for bottlenecks.
-- **Modularity**: Reusable functions, classes, and modular APIs.
+## Code Practices
+
+- **Clarity**: PEP 8 compliance. Use Black, isort, Ruff for formatting. Include comments only where logic is non-obvious.
+- **Efficiency**: Optimize for large datasets. Profile with cProfile or line_profiler to identify bottlenecks.
+- **Modularity**: Reusable functions, classes, and modular APIs. Design interfaces for easy integration.
 - **Type Hints**: All function signatures. Enforce with mypy.
-- **Documentation**: Google/NumPy style docstrings. Generate with Sphinx.
-- **Error Handling**: Custom exceptions, retry with tenacity for transient errors.
-- **Security**: Use secrets for key management, encrypt sensitive data, validate external inputs.
-- **Parameterization**: Use Hydra or OmegaConf for complex config management.
+- **Documentation**: Google/NumPy style docstrings for all functions and classes. Generate docs with Sphinx.
+- **Error Handling**: Custom exception classes, retry with tenacity for transient errors in distributed systems.
+- **Security**: Secrets for key management, encrypt sensitive data, prevent injection attacks (sqlparse for SQL), validate all external inputs.
+- **Parameterization**: Config-driven via Hydra or OmegaConf. No hardcoded values.
+- **Collaboration**: Code reviews via GitHub/GitLab/Bitbucket. Use PR templates.
+- **Ethical AI**: Fair, transparent, accountable ML decisions. Monitor for bias with Evidently AI. Document decision-making logic.
 
 ## Testing
 
@@ -23,34 +27,36 @@
 ## Data Validation
 
 - Use Pydantic V2, Great Expectations, or Pandera for data integrity
-- Track data lineage through pipelines
-- Validate all data sources meet expected formats
+- Track data lineage through pipelines (Apache Atlas or DataHub)
+- Validate all data sources meet expected formats and log outcomes
 
 ## Technology Stack
 
 ### Primary (Mandatory)
-| Purpose | Library |
-|---------|---------|
-| Data manipulation | Polars |
-| SQL analytics | DuckDB |
-| Validation | Pydantic V2 |
-| Logging | Loguru |
-| Testing | Pytest |
-| Visualization | DeckGL |
+
+| Purpose           | Library     |
+| ----------------- | ----------- |
+| Data manipulation | Polars      |
+| SQL analytics     | DuckDB      |
+| Validation        | Pydantic V2 |
+| Logging           | Loguru      |
+| Testing           | Pytest      |
+| Visualization     | DeckGL      |
 
 ### Secondary (As Needed)
-| Purpose | Library |
-|---------|---------|
-| DataFrames | Pandas / Fireducks |
-| Numerical | NumPy, SciPy |
-| ML | Scikit-learn, XGBoost, LightGBM |
-| Deep Learning | PyTorch, TensorFlow (ONNX for interop) |
-| Geospatial | GeoPandas, Shapely, Geopy |
-| Similarity search | FAISS-cpu / FAISS-gpu |
-| Visualization | Matplotlib, Seaborn, Plotly, Bokeh |
-| Orchestration | Airflow, Prefect, Dagster |
-| APIs | FastAPI |
-| Streaming | Kafka, RabbitMQ |
-| Containers | Docker, Kubernetes |
-| ML Ops | MLflow, Evidently AI |
-| CI/CD | GitHub Actions, Jenkins |
+
+| Purpose           | Library                                |
+| ----------------- | -------------------------------------- |
+| DataFrames        | Pandas / Fireducks                     |
+| Numerical         | NumPy, SciPy                           |
+| ML                | Scikit-learn, XGBoost, LightGBM        |
+| Deep Learning     | PyTorch, TensorFlow (ONNX for interop) |
+| Geospatial        | Duckdb, GeoPandas, Shapely, Geopy     |
+| Similarity search | FAISS-cpu / FAISS-gpu                  |
+| Visualization     | Matplotlib, Seaborn, Plotly, Bokeh     |
+| Orchestration     | Airflow, Prefect, Dagster              |
+| APIs              | FastAPI                                |
+| Streaming         | Kafka, RabbitMQ                        |
+| Containers        | Docker, Kubernetes                     |
+| ML Ops            | MLflow, Evidently AI                   |
+| CI/CD             | GitHub Actions, Jenkins                |
