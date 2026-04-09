@@ -51,6 +51,31 @@ To adapt these rules for your project:
 2. Modify docs for detailed rule documentation
 3. Add project-specific rules to `.amazonq/rules/` as additional `.md` files
 
+## Recommended MCP Servers
+
+When adopting these rules in a data pipeline project, consider setting up a [DuckDB MCP server](https://github.com/motherduckdb/mcp-server-motherduck) to make the verification rules enforceable in practice. This gives Amazon Q direct access to query your data, enabling:
+
+- **Data Verification (Priority 1)** — Live queries to verify statistics instead of relying on assumptions
+- **Data Integrity (Priority 4)** — JOIN validation, record counts, and exclusion checks against real data
+- **Visual Integrity** — Verification badges backed by actual query results
+
+Add to your project's `.amazonq/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "duckdb": {
+      "command": "uvx",
+      "args": ["mcp-server-motherduck"],
+      "env": {
+        "MOTHERDUCK_TOKEN": "<token>"
+      }
+    }
+  }
+}
+```
+
+For local-only DuckDB (no MotherDuck), use the [duckdb-mcp-server](https://github.com/hannesj/duckdb-mcp-server) package instead.
+
 ## Technology Stack
 
 See `docs/07_coding_standards.md` for the full technology stack. Primary tools: Polars, DuckDB, Pydantic V2, Loguru, Pytest.
