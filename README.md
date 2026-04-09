@@ -39,6 +39,8 @@ docs/
 ## How It Works
 
 - `.amazonq/rules/rules.md` is automatically included as context in every Amazon Q chat and inline chat request
+- The rules file starts with a **Role** section that defines Amazon Q's persona as a senior data engineer/data scientist, setting expectations for code quality, testing, security, and ethics
+- Below the role, a **Priority Hierarchy** and **Core Behaviors** section gives Amazon Q concise instructions for each rule
 - The `docs/` directory contains detailed documentation for each rule, used as human reference and for explicit `@docs` context inclusion
 - Rules are enforced through Pydantic V2 validators, automated pipeline validation, and fail-fast mechanisms
 
